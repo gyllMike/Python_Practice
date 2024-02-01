@@ -20,30 +20,28 @@ def if_else():
 
     user_dict = {}  # Dictionary to store key-value pairs
 
-    fin = open("words.txt")
+    with open("studentsinfor.txt", "r") as fin:
+        lines = fin.readlines()
 
-    fin = open("studentsinfor.txt", "r")
-    lines = fin.readlines()
+        # Before you look at this code, maybe you can open the txt first; it can help you understand more quickly
+        for i in range(0, len(lines), 2):
+            # a loop for going through every even line from zero because two lines are one group with username and password.
+            key = lines[i].strip()
+            # to gain the username line, strip can delete the space or shift between two strings so that this key = lines[i] the i only can be the username line, the odd line.
+            value = lines[i + 1].strip()
+            # as the same as the previous line, to gain the password name, but this time is beginning with key = line[i+1], then i only can be the password line, the even line.
+            user_dict[key] = value
+            # to let the username be a key and the password be a value in the dictionary
 
-    for i in range(0, len(lines), 2):
-        # a loop for go through every even line from zero,
-        # because two line are one group with username and password.
-        key = lines[i].strip()
-        # to gain the username line, strip can delete the space or shift between two strings, so that this key = lines[i] the i only can be username line, the odd line.
-        value = lines[i + 1].strip()
-        # as same as previous line, to gain the password name, but in this time is begin with key = line[i+1], then i only can be the password line, the even line.
-        user_dict[key] = value
-        # to let username be a key and password be a value in the dictionary
+    print("If you want to check members, please look at this line: ", user_dict)
+    print("Tip: you can add students' information in the txt only; the system is just helping students check whether they are in the system.")
 
-    print("if you want check members, please look at this line: ",user_dict)
-    print("tip: you can add students information in the txt only, the system is just help students check whether they are in the system.")
-
-    if entered_username in user_dict:
-        # if enetered_usename which we input in the username entry is in dictionary,
-        # then it will check whether your password of your username is correctly and is in the dictionary.
-        messagebox.showinfo(title="tips", message="successful,you are already in the system")
+    if entered_username in user_dict and user_dict[entered_username] == entered_password:
+        # if the entered_username, which we input in the username entry, is in the dictionary,
+        # then it will check whether your password of your username is correct and is in the dictionary.
+        messagebox.showinfo(title="Tips", message="Successful, you are already in the system")
     else:
-        messagebox.showinfo(title="tips", message="Your user name or Password wrong, please try again")
+        messagebox.showinfo(title="Tips", message="Your username or password is wrong; please try again")
 #=======================================================================================================================
 window = tk.Tk()
 window.geometry("2000x900")
@@ -60,7 +58,7 @@ Zleftframe.grid(column = 0,row = 0)
 Zleftframe.columnconfigure(0,weight=2)
 
 bottomframe = ttk.Frame(window)
-bottomframe.grid(column = 1,row = 5)
+bottomframe.grid(column = 1,row = 6)
 bottomframe.columnconfigure(0,weight=5)
 
 Zrightframe = ttk.Frame(window)
@@ -82,7 +80,7 @@ smallframe.grid(column=1,row=3,sticky=tk.W, padx=500, pady=0)
 smallframe.columnconfigure(3,weight = 3)
 
 namiframe = ttk.Frame(window,style = "My.TFrame")
-namiframe.grid(column = 1,row = 4,sticky=tk.W, padx=500, pady=0)
+namiframe.grid(column = 1,row = 4,sticky=tk.W, padx=501, pady=0)
 namiframe.columnconfigure(3,weight = 3)
 
 weimiframe=ttk.Frame(window)
@@ -116,22 +114,22 @@ buttom2 = tk.Button(middleframe, text="Creat Account", bg = "white",fg = "black"
 buttom2.place(x = 50, y = 79)
 #=======================================================================================================================
 findlabel = ttk.Label(smallframe, text='Select Language')
-findlabel.grid(column=0, row=0, sticky=tk.W, padx=1, pady=5)
+findlabel.grid(column=0, row=0, sticky=tk.W, padx=4, pady=5)
 
-combo =ttk.Combobox(smallframe,state="readonly",values=["Madring", "English", "Japanese", "Franch"])
-combo.grid(column=1, row=0, sticky=tk.W, padx=96, pady=1)
+combo =ttk.Combobox(smallframe,state="readonly",values=["Madring", "English", "Japanese", "Franch"],width=20)
+combo.grid(column=1, row=0, sticky=tk.W, padx=93, pady=1)
 
 findlabel = ttk.Label(smallframe, text='Username')
-findlabel.grid(column=0, row=2, sticky=tk.W, padx=1, pady=5)
+findlabel.grid(column=0, row=2, sticky=tk.W, padx=4, pady=5)
 
 findentry = ttk.Entry(smallframe, width=20)
-findentry.grid(column=1, row=2, sticky=tk.W, padx=100, pady=5)
+findentry.grid(column=1, row=2, sticky=tk.E, padx=93, pady=5)
 
 findlabel = ttk.Label(smallframe, text='Password')
-findlabel.grid(column=0, row=3, sticky=tk.W, padx=1, pady=5)
+findlabel.grid(column=0, row=3, sticky=tk.W, padx=4, pady=5)
 
 findentry1 = ttk.Entry(smallframe, width=20,show='*')
-findentry1.grid(column=1, row=3, sticky=tk.W, padx=100, pady=5)
+findentry1.grid(column=1, row=3, sticky=tk.E, padx = 93, pady=5)
 #=======================================================================================================================
 style = ttk.Style()
 style.configure("Blue.TLabel", foreground="blue",font=("Arial", 8))
